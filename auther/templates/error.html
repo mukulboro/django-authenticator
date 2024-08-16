@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center p-10">
+<h1 class="text-6xl">Error</h1>
+
+{% if messages %}
+{% for m in messages %}
+
+<div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+    <strong class="block font-medium text-red-800"> Error!</strong>
+
+    <p class="mt-2 text-sm text-red-700">
+        {{ m }}
+    </p>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endblock %}
+</div>

@@ -1,0 +1,21 @@
+<!-- Base template for all html pages.
+Contains meta data, tailwind with CDN and blocks for page title and content -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div class="mainbody">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+
+</html>

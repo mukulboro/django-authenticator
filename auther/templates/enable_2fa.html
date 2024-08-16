@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+Enable 2FA
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center p-10">
+    <h1 class="text-6xl">Enable 2FA for {{user}}</h1>
+    {% if form.errors %}
+    <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+        <strong class="block font-medium text-red-800"> Something went wrong </strong>
+
+        <p class="mt-2 text-sm text-red-700">
+            {{ form.errors }}
+        </p>
+    </div>
+    {% endif %}    
+
+    {% if messages %}
+    {% for m in messages %}
+        {% if m.tags == "error" %}
+        <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+            <strong class="block font-medium text-red-800"> Something went wrong </strong>
+    
+            <p class="mt-2 text-sm text-red-700">
+                {{ m }}
+            </p>
+        </div>
+        {% else %}
+        <div role="alert" class="rounded border-s-4 border-green-500 bg-green-50 p-4">
+            <strong class="block font-medium text-red-800"> Success! </strong>
+    
+            <p class="mt-2 text-sm text-red-700">
+                {{ m }}
+            </p>
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+
+
+    <img src="data:image/png;base64,{{ qr }}" alt="QR Code">
+    <h1>Autheticator Secret: {{token}}</h1>
+    <form method="POST" class="flex flex-col items-center p-10">
+        {% csrf_token %}
+        {{form}}
+        <button
+            class="inline-flex mt-2 items-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"
+            type="submit">Enable</button>
+    </form>
+
+</div>
+{% endblock %}

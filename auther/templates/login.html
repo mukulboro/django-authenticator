@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50">
+    <div class="p-8 md:p-12 lg:px-16 lg:py-24">
+        <div class="mx-auto max-w-lg text-center">
+            <h2 class="text-2xl font-bold text-gray-900 md:text-3xl">
+                Login
+            </h2>
+        </div>
+
+        {% if form.errors %}
+        <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+            <strong class="block font-medium text-red-800"> Something went wrong </strong>
+
+            <p class="mt-2 text-sm text-red-700">
+                {{ form.errors }}
+            </p>
+        </div>
+        {% endif %}
+
+
+        {% if messages %}
+        {% for m in messages %}
+        {% if m.tags == "error" %}
+        <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+            <strong class="block font-medium text-red-800"> Something went wrong </strong>
+
+            <p class="mt-2 text-sm text-red-700">
+                {{ m }}
+            </p>
+        </div>
+        {% else %}
+        <div role="alert" class="rounded border-s-4 border-green-500 bg-green-50 p-4">
+            <strong class="block font-medium text-red-800"> Success! </strong>
+
+            <p class="mt-2 text-sm text-red-700">
+                {{ m }}
+            </p>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <div class="mt-10 flex justify-center">
+            <form method="POST" class="sm:flex">
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit"
+                    class="group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-white transition focus:outline-none focus:ring focus:ring-yellow-400 sm:mt-0 sm:w-auto">
+                    <span class="text-sm font-medium"> Login </span>
+
+                    <svg class="size-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
