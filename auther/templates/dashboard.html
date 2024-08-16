@@ -5,8 +5,30 @@ Dashboard
 {% endblock %}
 
 {% block content %}
-<div class="bg-red-300 flex-col">
-<h1>Dashboard</h1>
+<div class="flex flex-col items-center p-10">
+<h1 class="text-6xl">Dashboard</h1>
+
+{% if messages %}
+    {% for m in messages %}
+        {% if m.tags == "error" %}
+        <div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+            <strong class="block font-medium text-red-800"> Something went wrong </strong>
+    
+            <p class="mt-2 text-sm text-red-700">
+                {{ m }}
+            </p>
+        </div>
+        {% else %}
+        <div role="alert" class="rounded border-s-4 border-green-500 bg-green-50 p-4">
+            <strong class="block font-medium text-red-800"> Success! </strong>
+    
+            <p class="mt-2 text-sm text-red-700">
+                {{ m }}
+            </p>
+        </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
 
 <h2>Logged in as {{user.username}} ({{user.email}})</h2>
 <h2>2FA Enabled status: {{user.has_2fa}}</h2>

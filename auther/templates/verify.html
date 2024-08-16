@@ -7,6 +7,38 @@ Verify Login
 {% block content %}
 <h1>Verify with 2FA</h1>
 
+{% if form.errors %}
+<div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+    <strong class="block font-medium text-red-800"> Something went wrong </strong>
+
+    <p class="mt-2 text-sm text-red-700">
+        {{ form.errors }}
+    </p>
+</div>
+{% endif %}
+
+{% if messages %}
+{% for m in messages %}
+{% if m.tags == "error" %}
+<div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+    <strong class="block font-medium text-red-800"> Something went wrong </strong>
+
+    <p class="mt-2 text-sm text-red-700">
+        {{ m }}
+    </p>
+</div>
+{% else %}
+<div role="alert" class="rounded border-s-4 border-green-500 bg-green-50 p-4">
+    <strong class="block font-medium text-red-800"> Success! </strong>
+
+    <p class="mt-2 text-sm text-red-700">
+        {{ m }}
+    </p>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
 <form method="POST">
     {% csrf_token %}
     {{form}}

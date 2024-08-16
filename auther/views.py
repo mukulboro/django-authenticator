@@ -76,12 +76,13 @@ def enable_2fa_page(request):
             valid_totp = generate_totp(request.user.email) # Generating ASAP to reduce time conflicts
             form = Enable2FAForm(request.POST)
             if not form.is_valid():
-                return render(request, "enable_2fa.html", {"form":form})
+                return render(request, "enable_2fa.html", {"user":request.user, "qr":qr, "token":token, "form":form})
             user_totp = int(form.cleaned_data["code"])
 
             if not valid_totp == user_totp:
+                qr, token = generate_qr(request.user.email)
                 messages.error(request, "Invalid TOTP provided")
-                return render(request, "enable_2fa.html", {"form":form})
+                return render(request, "enable_2fa.html", {"user":request.user, "qr":qr, "token":token, "form":form})
             user_model = ExtendedUser.objects.get(pk=request.user.id)
             user_model.has_2fa = True
             user_model.save()
@@ -96,5 +97,6 @@ def error_page(request):
 
 def logout_route(request):
     logout(request)
+    messages.success(request, "Logged Out")
     return redirect("/login")
 

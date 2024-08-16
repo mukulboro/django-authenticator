@@ -6,4 +6,18 @@ Error
 
 {% block content %}
 <h1>Error</h1>
+
+{% if messages %}
+{% for m in messages %}
+
+<div role="alert" class="rounded border-s-4 border-red-500 bg-red-50 p-4">
+    <strong class="block font-medium text-red-800"> Error!</strong>
+
+    <p class="mt-2 text-sm text-red-700">
+        {{ m }}
+    </p>
+</div>
+
+{% endfor %}
+{% endif %}
 {% endblock %}
