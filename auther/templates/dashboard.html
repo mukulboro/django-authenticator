@@ -5,16 +5,22 @@ Dashboard
 {% endblock %}
 
 {% block content %}
+<div class="bg-red-300 flex-col">
 <h1>Dashboard</h1>
 
-<h2>Logged in as {{user.username}}</h2>
+<h2>Logged in as {{user.username}} ({{user.email}})</h2>
 <h2>2FA Enabled status: {{user.has_2fa}}</h2>
 
 {% if user.has_2fa == False %}
-<button>Enable 2FA</button>
-{% else %}
-<button>Disable 2FA</button>
+<form method="GET" action="/enable-2fa">
+    {% csrf_token %}
+    <button type="submit"  class="inline-flex mt-2 items-center gap-2 rounded border border-indigo-600 bg-indigo-600 px-8 py-3 text-white hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring active:text-indigo-500">
+        Enable 2FA
+    </button>
+</form>
 {% endif %}
 
+<a href="/logout"  class="inline-flex mt-10 items-center gap-2 rounded border border-red-600 bg-red-600 px-8 py-3 text-white hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500" >Logout</a>
 
+</div>
 {% endblock %}

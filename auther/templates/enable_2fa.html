@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+Enable 2FA
+{% endblock %}
+
+{% block content %}
+<h1>Enable 2FA for {{user}}</h1>
+
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
+
+{% if messages %}
+{% for m in messages %}
+{{m}}
+{% endfor %}
+{% endif %}
+
+
+<img src="data:image/png;base64,{{ qr }}" alt="QR Code">
+<h1>Autheticator Secret: {{token}}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Enable</button>
+</form>
+{% endblock %}

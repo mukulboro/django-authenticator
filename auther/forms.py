@@ -13,3 +13,9 @@ class RegisterForm(UserCreationForm): # Use default django user model
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
+
+class Enable2FAForm(forms.Form):
+    code = forms.IntegerField()
+
+class VerifyTOTPForm(forms.Form):
+    code = forms.IntegerField()

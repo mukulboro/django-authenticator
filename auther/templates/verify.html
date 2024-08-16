@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
 {% block title %}
-Error
+Verify Login
 {% endblock %}
 
 {% block content %}
 <h1>Verify with 2FA</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Verify</button>
+</form>
+
 {% endblock %}
