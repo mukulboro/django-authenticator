@@ -6,4 +6,15 @@ Dashboard
 
 {% block content %}
 <h1>Dashboard</h1>
+
+<h2>Logged in as {{user.username}}</h2>
+<h2>2FA Enabled status: {{user.has_2fa}}</h2>
+
+{% if user.has_2fa == False %}
+<button>Enable 2FA</button>
+{% else %}
+<button>Disable 2FA</button>
+{% endif %}
+
+
 {% endblock %}
