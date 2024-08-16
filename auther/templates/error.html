@@ -5,7 +5,8 @@ Error
 {% endblock %}
 
 {% block content %}
-<h1>Error</h1>
+<div class="flex flex-col items-center p-10">
+<h1 class="text-6xl">Error</h1>
 
 {% if messages %}
 {% for m in messages %}
@@ -21,3 +22,4 @@ Error
 {% endfor %}
 {% endif %}
 {% endblock %}
+</div>

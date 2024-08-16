@@ -15,10 +15,10 @@ def login_page(request):
         user = authenticate(username=uname, password=pwd)
         if user is not None:
             has_2fa = user.has_2fa
-            if not has_2fa:
+            if not has_2fa: # if 2FA is not enabled, directly log the user in
                 login(request, user)
                 return redirect("/")
-            request.session["verify_email"] = user.email
+            request.session["verify_email"] = user.email # Passing the user email to another route
             return redirect("/verify-login")
         messages.error(request, "Invalid Credentials")
         return render(request, "login.html", {"form":form})
@@ -44,7 +44,7 @@ def verify_login_page(request):
         return render(request, "verify.html", {"form":form})
     elif request.method == "POST":
         email = request.session["verify_email"]
-        valid_totp = generate_totp(email)
+        valid_totp = generate_totp(email) # Generate TOTP ASAP to avoid timing conflicts
         form = VerifyTOTPForm(request.POST)
         if not form.is_valid():
             return render(request, "verify.html", {"form":form})
@@ -64,6 +64,7 @@ def dashboard_page(request):
     if request.user.is_authenticated:
         return render(request, "dashboard.html", {"user":request.user})
     else:
+        messages.error(request, "You must be logged in to access this page")
         return redirect("/error")
 
 def enable_2fa_page(request):
@@ -84,12 +85,14 @@ def enable_2fa_page(request):
                 messages.error(request, "Invalid TOTP provided")
                 return render(request, "enable_2fa.html", {"user":request.user, "qr":qr, "token":token, "form":form})
             user_model = ExtendedUser.objects.get(pk=request.user.id)
+            # ^ Extra DB query since user is not logged in by this point
             user_model.has_2fa = True
-            user_model.save()
+            user_model.save() # Update the user model and enable 2FA
             messages.success(request, "Enabled 2FA")
             return redirect("/")
 
     else:
+        messages.error(request, "You must be logged in to access this page")
         return redirect("/error")
 
 def error_page(request):

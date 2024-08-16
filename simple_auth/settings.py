@@ -70,11 +70,6 @@ TEMPLATES = [
     },
 ]
 
-# AUTHENTICATION_BACKENDS = [
-#     # Needed to login by username in Django admin, regardless of `allauth`
-#     'django.contrib.auth.backends.ModelBackend',
-
-# ]
 
 WSGI_APPLICATION = 'simple_auth.wsgi.application'
 
@@ -108,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'auther.ExtendedUser'
+AUTH_USER_MODEL = 'auther.ExtendedUser' # Overriding default user model with custom model
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
